@@ -1,28 +1,51 @@
 <h1 class="text-center">Cancer Diagnosis Prediction</h1>
 <form action="/predict" method="POST" class="mt-4">
-  <% features.forEach((feature) => { %>
-  <div class="mb-3">
-    <label for="<%= feature %>" class="form-label"
-      ><%= feature.replace('_', ' ') %></label
-    >
-    <input
-      type="number"
-      step="any"
-      class="form-control"
-      id="<%= feature %>"
-      name="<%= feature %>"
-      placeholder="Enter <%= feature.replace('_', ' ') %>"
-      required
-    />
+  <div class="d-flex flex-column flex-md-row row">
+    <div class="col-12 col-md-6">
+      <% features.slice(0, 4).forEach((feature, i) => { %>
+      <div class="mb-3">
+        <label for="<%= feature %>" class="form-label"
+          ><%= featureLabels[i] %></label
+        >
+        <input
+          type="number"
+          step="any"
+          class="form-control"
+          id="<%= feature %>"
+          name="<%= feature %>"
+          placeholder="Enter <%= featureLabels[i].toLowerCase() %>"
+          required
+        />
+      </div>
+      <% }) %>
+    </div>
+    <div class="col-12 col-md-6">
+      <% features.slice(4).forEach((feature, i) => { %>
+      <div class="mb-3">
+        <label for="<%= feature %>" class="form-label"
+          ><%= featureLabels[i + 4] %></label
+        >
+        <input
+          type="number"
+          step="any"
+          class="form-control"
+          id="<%= feature %>"
+          name="<%= feature %>"
+          placeholder="Enter <%= featureLabels[i + 4].toLowerCase() %>"
+          required
+        />
+      </div>
+      <% }) %>
+    </div>
   </div>
-  <% }) %>
-  <button type="submit" class="btn btn-primary">Predict Diagnosis</button>
+  <button type="submit" class="btn btn-primary w-100">Predict Diagnosis</button>
 </form>
 
 <% if (result) { %>
-<div class="alert alert-success mt-4" role="alert"><%= result %></div>
-<% } %> <% if (precision !== null) { %>
-<div class="alert alert-info mt-4" role="alert">
-  Precision of the model: <%= precision %>
+<div
+  class="alert mt-4 <%= danger === null ? 'alert-success' : danger === false ? 'alert-warning' : 'alert-danger' %>"
+  role="alert"
+>
+  <%= result %>
 </div>
 <% } %>
